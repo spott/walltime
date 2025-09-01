@@ -50,7 +50,7 @@ _wall_preexec() { _wall_cmd_start=$EPOCHREALTIME; _wall_cmd_text="$1" }
 
 _wall_precmd() {
   emulate -L zsh
-  local status=$?
+  local status_=$?
   if [[ -n ${_wall_cmd_text-} && -n ${_wall_cmd_start-} ]]; then
     local -F 6 end=$EPOCHREALTIME
     local -F 6 dur=$(( end - _wall_cmd_start ))
@@ -58,7 +58,7 @@ _wall_precmd() {
     _wall_hist_start+=$_wall_cmd_start
     _wall_hist_end+=$end
     _wall_hist_dur+=$dur
-    _wall_hist_status+=$status
+    _wall_hist_status+=$status_
     while (( ${#_wall_hist_cmd} > WALLTIME_HIST_SIZE )); do
       shift _wall_hist_cmd _wall_hist_start _wall_hist_end _wall_hist_dur _wall_hist_status
     done
